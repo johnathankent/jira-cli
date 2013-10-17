@@ -20,23 +20,32 @@ path = require 'path'
 JiraHelper = require('./jira-cli').JiraHelper
 # ## [dutils docs/source](data-utils.html)
 dutils = require('./data-utils')
+# Native Node module for accessing keychain https://github.com/atom/node-keytar
+keytar = require 'keytar'
+
+
+# Prints: Password is baz
+
 
 # ## Create Config File ##
 #
 # Creates a config file when one doesn't exist
 createConfigFile = (aConfigFile) ->
     console.log "No config file found, answer these questions to create one!"
-    dutils.ask "Username", /.+/, (username) ->
-        dutils.ask "Password", /.+/, (password) ->
-            dutils.ask "Jira Host", /.+/, (host) ->
-                dutils.ask "Jira Port", /.+/, (port) ->
+    dutils.ask "Jira Host", /.+/, (host) ->
+        dutils.ask "Jira Port", /.+/, (port) ->
+            dutils.ask "Username", /.+/, (username) ->
+                dutils.ask "Password (stored in keychain)", /.+/, (password) ->
+                    if !keytar.addPassword(host, username, password)
+                        console.error "Could not add password to keychain"
+                        process.exit()
                     dutils.ask "Default Project", /.*/, (project) ->
                         config =
                             user:username
-                            password:password
                             host:host
                             port:port
                             project:project
+                            useKeychain:true
 
                         fs.writeFileSync aConfigFile,
                             JSON.stringify(config), 'utf8'
@@ -57,8 +66,11 @@ paramIsText = (param)->
 #
 loadConfigFile = (configFilePath) ->
     configFile = fs.readFileSync configFilePath
+    cfg = JSON.parse configFile
+    if cfg.useKeychain
+        cfg.password = keytar.getPassword(cfg.host, cfg.user)
+    return cfg
 
-    JSON.parse configFile
 
 # ## Transition Item ##
 #
@@ -131,7 +143,7 @@ addItem = (project)->
                 issueTypes.sort dutils.itemSorter
                 for type, index in issueTypes
                     jiraCli.pp.prettyPrintIssueTypes type, index + 1
-                    
+
                 allowedTypes = [1..issueTypes.length]
                 addIssueCallback = (type)->
                     jiraCli.addIssue summary, description,
