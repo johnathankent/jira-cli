@@ -1,13 +1,16 @@
-# jira-cli
+# jira-cli+OSX Keychain
 
-[![Build Status](https://travis-ci.org/tebriel/jira-cli.png?branch=master)](https://travis-ci.org/tebriel/jira-cli)
 
 This is a command line client for jira, because no one likes their terrible
 interface.
 
+This fork uses node-keytar to store credentials in the OSX keychain as opposed to plain text.
+
+
+
 ## Getting Started
 
-*  Install the module with: `npm install -g jira-cli`
+*  Install the module with: `npm install -g https://github.com/startswithaj/jira-cli`
 *  Run it with `jira`
 
 ## What does it do?
