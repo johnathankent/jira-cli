@@ -1,16 +1,16 @@
-# jira-cli+OSX Keychain
+# jira-cli
 
 
 This is a command line client for jira, because no one likes their terrible
 interface.
 
-This fork uses node-keytar to store credentials in the OSX keychain as opposed to plain text.
+This fork uses node-keytar to store credentials in the credential-store of the OS as opposed to plain text.
 
 
 
 ## Getting Started
 
-*  Install the module with: `npm install -g https://github.com/startswithaj/jira-cli`
+*  Install the module with: `npm install -g https://github.com/paulonutor/jira-cli`
 *  Run it with `jira`
 
 ## What does it do?
@@ -41,7 +41,6 @@ This fork uses node-keytar to store credentials in the OSX keychain as opposed t
 
 ## Notes ##
 
-If you use `https:` for jira, add `"protocol": "https:"` to your .jiraclirc.json
 If your ssl certs are also self-signed add: `"strictSSL": false` to your .jiraclirc.json
 
 ## Testing ##
