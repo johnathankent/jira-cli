@@ -199,7 +199,7 @@ if require.main is module
         return
     args = argv.argv
 
-    configFilePath = path.join process.env.HOME, '.jiraclirc.json'
+    configFilePath = path.join process.env.HOME, '.jira-cli.rc.json'
     unless fs.existsSync configFilePath
         createConfigFile configFilePath
         return
