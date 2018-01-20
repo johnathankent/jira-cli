@@ -2,9 +2,10 @@
 
 A command line client for jira.
 
-## Getting Started
-1.  Install the module with: `npm install -g https://github.com/johnathankent/jira-cli`
-2.  Run it with `jira`
+## Install
+```bash
+npm install -g https://github.com/johnathankent/jira-cli
+```
 
 ## Features
 *  Lists all a user's issues
@@ -16,14 +17,10 @@ A command line client for jira.
 *  Adds a worklog to an issue
 *  Allow searching to be limited by project id
 
-## Examples
-`jira -l`
-`jira -f AB-123`
-
 ## Config
 
 ### Self Signed SSL certs
-If your ssl certs are also self-signed add: `"strictSSL": false` to your `.jira-cli.rc`
+If your ssl certs are also self-signed add: `"strictSSL": false` to `~/.jiraclirc`
 
 ## Testing
 * Using jasmine-node with grunt.
